@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const FileUploader = ({ onUpload }) => {
+const FileUploader = () => {
   const [selectedFile, setSelectedFile] = useState(null);
 
   const handleFileChange = (event) => {
@@ -9,24 +9,17 @@ const FileUploader = ({ onUpload }) => {
   };
 
   const handleUpload = () => {
-    if (selectedFile) {
-      const formData = new FormData();
-      formData.append("file", selectedFile);
-      console.log(formData);
+    const formData = new FormData();
+    formData.append("file", selectedFile);
 
-      axios
-        .post("http://127.0.0.1:5002/api/product/OCR", formData)
-        .then((response) => {
-          // 서버에서 받은 데이터를 사용
-          console.log(response.data);
-          onUpload(response.data);
-        })
-        .catch((error) => {
-          console.error("Error uploading file:", error);
-        });
-    } else {
-      console.error("Please select a file.");
-    }
+    axios
+      .post("http://127.0.0.1:5003/upload", formData)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("Error uploading image", error);
+      });
   };
 
   return (

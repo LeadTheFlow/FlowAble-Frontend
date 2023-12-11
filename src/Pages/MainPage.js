@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { json, useNavigate } from "react-router-dom";
 import StyledButton from "../components/StyledButton";
 import FileUploader from "../components/FileUploader";
-import FileuploadHandler from "../components/FileUploadHandler";
 
 const MainContainer = styled.div`
   display: flex;
@@ -62,8 +61,7 @@ const MainPage = () => {
   return (
     <MainContainer>
       <p>{data.message}</p>
-      {/* <FileUploader onUpload={handleUploadResult}></FileUploader> */}
-      <FileuploadHandler></FileuploadHandler>
+      <FileUploader onUpload={handleUploadResult}></FileUploader>
       <StyledButton
         value="Calendar"
         onClick={() => moveToPage("Calendar/Selection")}
