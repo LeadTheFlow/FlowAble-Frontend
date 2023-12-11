@@ -19,7 +19,7 @@ const StyledButton = styled.button`
       case "Restroom":
         return "background-color: #1271FF; color: white;";
       default:
-        return "background-color: #FF8989;";
+        return "background-color: #92D14F;";
     }
   }}
 
