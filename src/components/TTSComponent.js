@@ -3,7 +3,9 @@ import React, { useState } from "react";
 import axios from "axios";
 import * as SpeechSDK from "microsoft-cognitiveservices-speech-sdk";
 
-const TTSComponent = () => {
+// 5002/api/OCR
+
+const TTSComponent = ({ endpoint }) => {
   const [textToSpeak, setTextToSpeak] = useState("");
 
   const fetchOCRData = async (imageFile) => {

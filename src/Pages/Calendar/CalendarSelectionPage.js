@@ -18,12 +18,21 @@ const CalendarSelectionPage = () => {
     navigate("/Pages/" + moveTo);
   }
 
+  const moveToCameraPage = (moveTo, cameraType) => {
+    navigate(`/Pages/${moveTo}`, { state: { cameraType } });
+  };
+
   return (
     <CalendarSelectionContainer>
       <StyledButton value="Calendar" onClick={() => moveToPage("Calendar")}>
         달력 확인
       </StyledButton>
-      <StyledButton value="Calendar">카메라</StyledButton>
+      <StyledButton
+        value="Calendar"
+        onClick={() => moveToCameraPage("Camera", "ColorDetection")}
+      >
+        카메라
+      </StyledButton>
     </CalendarSelectionContainer>
   );
 };

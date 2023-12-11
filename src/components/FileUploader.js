@@ -1,35 +1,21 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const FileUploader = () => {
+const FileUploader = ({ endpoint }) => {
   const [selectedFile, setSelectedFile] = useState(null);
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
   };
 
-  // const handleUpload = () => {
-  //   const formData = new FormData();
-  //   formData.append("file", selectedFile);
-
-  //   axios
-  //     .post("http://127.0.0.1:5003/upload", formData)
-  //     .then((response) => {
-  //       console.log(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error uploading image", error);
-  //     });
-  // };
-
   const handleUploadTest = () => {
     const formData = new FormData();
     formData.append("file", selectedFile);
 
     axios
-      .post("http://127.0.0.1:5002/api/OCR", formData)
+      .post(`http://127.0.0.1:${endpoint}`, formData)
       .then((response) => {
-        console.log(response.result);
+        console.log(response.data);
       })
       .catch((error) => {
         console.error("Error uploading image", error);

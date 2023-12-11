@@ -39,7 +39,6 @@ const MainPage = () => {
       .get("http://127.0.0.1:5000/api/data")
       .then((response) => {
         // 서버에서 받은 데이터를 사용
-        console.log(response.data);
         const jsonData = response.data;
         setData(jsonData);
       })
@@ -63,7 +62,7 @@ const MainPage = () => {
     <MainContainer>
       <p>{data.message}</p>
       {/* <FileUploader onUpload={handleUploadResult}></FileUploader> */}
-      <TTSComponent></TTSComponent>
+      {/* <TTSComponent endpoint={"5002/api/OCR"}></TTSComponent> */}
       <StyledButton
         value="Calendar"
         onClick={() => moveToPage("Calendar/Selection")}
