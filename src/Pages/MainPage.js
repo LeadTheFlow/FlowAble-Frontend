@@ -3,6 +3,8 @@ import axios from "axios";
 import styled from "styled-components";
 import { json, useNavigate } from "react-router-dom";
 import StyledButton from "../components/StyledButton";
+import FileUploader from "../components/FileUploader";
+import FileuploadHandler from "../components/FileUploadHandler";
 
 const MainContainer = styled.div`
   display: flex;
@@ -14,11 +16,9 @@ const MainContainer = styled.div`
 
 const MainPage = () => {
   const [data, setData] = useState({});
-  const [appData, setAppData] = useState({});
 
   useEffect(() => {
     fetchDataTest();
-    fetchAppTest();
   }, []);
 
   // const fetchData = async () => {
@@ -34,32 +34,14 @@ const MainPage = () => {
   //   # API 엔드포인트에 GET 요청을 보냄
   // response = requests.get(url, params={'path': image_path})
 
-  const params = {
-    path: "../components/logo512.png",
-  };
-
   const fetchDataTest = () => {
     axios
-      .get("http://127.0.0.1:5000/api/OCR_result", params)
+      .get("http://127.0.0.1:5000/api/data")
       .then((response) => {
         // 서버에서 받은 데이터를 사용
         console.log(response.data);
         const jsonData = response.data;
         setData(jsonData);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  };
-
-  const fetchAppTest = () => {
-    axios
-      .get("http://127.0.0.1:5000/api/app")
-      .then((response) => {
-        // 서버에서 받은 데이터를 사용
-        console.log(response.data);
-        const jsonData = response.data;
-        setAppData(jsonData);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -72,9 +54,16 @@ const MainPage = () => {
     navigate("/Pages/" + moveTo);
   }
 
+  const handleUploadResult = (result) => {
+    console.log(result);
+    setData(result);
+  };
+
   return (
     <MainContainer>
       <p>{data.message}</p>
+      {/* <FileUploader onUpload={handleUploadResult}></FileUploader> */}
+      <FileuploadHandler></FileuploadHandler>
       <StyledButton
         value="Calendar"
         onClick={() => moveToPage("Calendar/Selection")}
