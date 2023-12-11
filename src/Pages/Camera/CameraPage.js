@@ -1,7 +1,7 @@
 import React from "react";
 
-const CalendarCameraPage = () => {
+const CameraPage = () => {
   return <div></div>;
 };
 
-export default CalendarCameraPage;
+export default CameraPage;

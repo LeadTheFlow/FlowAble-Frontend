@@ -24,7 +24,6 @@ const StyledButton = styled.button`
   }}
 
   &:hover {
-    /* hover 시 어두운 톤으로 변경 */
     filter: brightness(90%);
   }
 `;
