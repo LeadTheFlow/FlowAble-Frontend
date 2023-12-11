@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState } from 'react';
+import axios from 'axios';
 
-const FileUploader = ({ endpoint }) => {
+const FileUploader = ({ setData, endpoint }) => {
   const [selectedFile, setSelectedFile] = useState(null);
 
   const handleFileChange = (event) => {
@@ -10,15 +10,16 @@ const FileUploader = ({ endpoint }) => {
 
   const handleUploadTest = () => {
     const formData = new FormData();
-    formData.append("file", selectedFile);
+    formData.append('file', selectedFile);
 
     axios
       .post(`http://127.0.0.1:${endpoint}`, formData)
       .then((response) => {
         console.log(response.data);
+        setData(response.data);
       })
       .catch((error) => {
-        console.error("Error uploading image", error);
+        console.error('Error uploading image', error);
       });
   };
 
