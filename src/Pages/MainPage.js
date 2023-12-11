@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { json, useNavigate } from "react-router-dom";
 import StyledButton from "../components/StyledButton";
 import FileUploader from "../components/FileUploader";
+import TTSComponent from "../components/TTSComponent";
 
 const MainContainer = styled.div`
   display: flex;
@@ -61,7 +62,8 @@ const MainPage = () => {
   return (
     <MainContainer>
       <p>{data.message}</p>
-      <FileUploader onUpload={handleUploadResult}></FileUploader>
+      {/* <FileUploader onUpload={handleUploadResult}></FileUploader> */}
+      <TTSComponent></TTSComponent>
       <StyledButton
         value="Calendar"
         onClick={() => moveToPage("Calendar/Selection")}
