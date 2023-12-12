@@ -32,9 +32,6 @@ const ResultTitle = styled.div`
 const ResultModal = ({ data, closeModal, cameraType }) => {
   const navigate = useNavigate();
 
-  function moveToPage(moveTo) {
-    navigate('/Pages/' + moveTo);
-  }
   useEffect(() => {
     let synthesizer;
 
@@ -91,12 +88,12 @@ const ResultModal = ({ data, closeModal, cameraType }) => {
               진단 결과: <br />
               {data.message}
             </ResultTitle>
-            <ModalButton
+            {/* <ModalButton
               value="Calendar"
               onClick={() => moveToPage('Calendar')}
             >
               달력 기록
-            </ModalButton>
+            </ModalButton> */}
             <ModalButton value="Calendar" onClick={closeModal}>
               다시 찍기
             </ModalButton>

@@ -35,7 +35,7 @@ const MainPage = () => {
         value="Product"
         onClick={() => moveToCameraPage('Camera', 'ProductOCR')}
       >
-        생리대 선택
+        생리대 인식
       </StyledButton>
       <StyledButton
         value="Calendar"

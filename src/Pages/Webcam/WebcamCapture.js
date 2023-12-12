@@ -16,10 +16,12 @@ const Container = styled.div`
 const WebcamCapture = ({ endpoint, onLoading, setData }) => {
   const webcamRef = useRef(null);
   const [isUploading, setIsUploading] = useState(false);
+  const [capturedImage, setCapturedImage] = useState(null);
 
   const captureAndUpload = useCallback(() => {
     const imageSrc = webcamRef.current.getScreenshot();
     if (imageSrc) {
+      setCapturedImage(imageSrc);
       // base64/URLEncoded 이미지를 raw binary로 변환
       let byteString;
       if (imageSrc.split(',')[0].indexOf('base64') >= 0)
@@ -66,15 +68,23 @@ const WebcamCapture = ({ endpoint, onLoading, setData }) => {
 
   return (
     <Container>
-      <Webcam
-        screenshotFormat="image/jpeg"
-        videoConstraints={videoConstraints}
-        audio={false}
-        height={500}
-        width={500}
-        ref={webcamRef}
-        mirrored={false}
-      />
+      {isUploading ? (
+        <img
+          src={capturedImage}
+          alt="Captured"
+          style={{ width: 500, height: 500 }}
+        />
+      ) : (
+        <Webcam
+          screenshotFormat="image/jpeg"
+          videoConstraints={videoConstraints}
+          audio={false}
+          height={500}
+          width={500}
+          ref={webcamRef}
+          mirrored={false}
+        />
+      )}
       <ModalButton onClick={captureAndUpload} disabled={isUploading}>
         {isUploading ? '업로드 중 ...' : '촬영 및 업로드'}
       </ModalButton>
