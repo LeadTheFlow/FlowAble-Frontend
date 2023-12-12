@@ -16,13 +16,13 @@ const CameraContainer = styled.div`
 
 const CameraDiv = styled.div`
   text-align: center;
-  margin: 10px;
 `;
 
 const CameraTitle = styled.p`
   font-size: 1.5rem;
-  padding: 10px;
+  padding: 4px;
   border-radius: 4dvh;
+  margin: 4px;
 
   ${(props) => {
     switch (props.value) {
@@ -92,7 +92,7 @@ const CameraPage = () => {
             endpoint="5002/api/OCR"
             onLoading={handleLoading}
           />
-
+          {isLoading && <LoadingModal />}
           {isModalOpen && (
             <ResultModal
               data={responseValue}
@@ -112,7 +112,7 @@ const CameraPage = () => {
             endpoint="5004/api/detectTrash"
             onLoading={handleLoading}
           />
-
+          {isLoading && <LoadingModal />}
           {isModalOpen && (
             <ResultModal
               data={responseValue}

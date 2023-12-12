@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
-import WebcamComponent from '../Pages/Webcam/WebcamComponent';
 
+// file upload version
+// Test version
 const FileContainer = styled.div`
   display: flex;
   align-items: center;
@@ -12,7 +13,6 @@ const FileContainer = styled.div`
 const FileUploader = ({ setData, endpoint, onLoading }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
-  const [captureImg, setCaptureImg] = useState(null);
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);

@@ -3,7 +3,7 @@ import React, { useState, useRef, useCallback } from 'react';
 import Webcam from 'react-webcam';
 
 //npm i react-webcam
-
+// webcam test version
 const WebcamComponent = () => {
   const webcamRef = useRef(null);
   const [img, setImg] = useState(null);

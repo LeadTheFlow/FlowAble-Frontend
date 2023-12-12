@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import StyledButton from './StyledButton';
 import ModalButton from './ModalButton';
 import * as SpeechSDK from 'microsoft-cognitiveservices-speech-sdk';
 
@@ -9,36 +8,20 @@ const ModalBackground = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  height: 100vh;
-  width: max-content;
+  width: 100%;
+  height: 100%;
   background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000;
 `;
 
 const ModalContainer = styled.div`
-  position: relative;
-  background-color: white;
-  text-align: center;
-  display: flex;
+  background: white;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  width: 70%;
-
-  div {
-    margin-bottom: 15px;
-  }
-
-  p {
-    margin: 5px 0;
-  }
-
-  .loading {
-    font-size: 1.2em;
-    margin-top: 10px;
-  }
+  width: 80%;
 `;
 
 const ResultTitle = styled.div`
@@ -55,6 +38,7 @@ const ResultModal = ({ data, closeModal, cameraType }) => {
   useEffect(() => {
     let synthesizer;
 
+    // TTS 실행
     try {
       const speechConfig = SpeechSDK.SpeechConfig.fromSubscription(
         '614a864f8782482a813b09414bfd8985',
@@ -104,7 +88,7 @@ const ResultModal = ({ data, closeModal, cameraType }) => {
         {cameraType === 'ColorDetection' && (
           <div>
             <ResultTitle>
-              진단 결과:
+              진단 결과: <br />
               {data.message}
             </ResultTitle>
             <ModalButton
@@ -123,10 +107,13 @@ const ResultModal = ({ data, closeModal, cameraType }) => {
           <div>
             {data.brand !== '' ? (
               <ResultTitle>
-                이 제품은 {data.brand}, 사이즈는 {data.size} 입니다
+                이 제품은 {data.brand}, <br />
+                사이즈는 {data.size} 입니다
               </ResultTitle>
             ) : (
-              <ResultTitle>제품을 인식하지 못했습니다</ResultTitle>
+              <ResultTitle>
+                제품을 인식하지 <br /> 못했습니다
+              </ResultTitle>
             )}
             <ModalButton value="Product" onClick={closeModal}>
               다시 찍기

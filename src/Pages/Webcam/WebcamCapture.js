@@ -2,16 +2,13 @@ import React, { useState, useRef, useCallback } from 'react';
 import Webcam from 'react-webcam';
 import axios from 'axios';
 import styled from 'styled-components';
+import ModalButton from '../../components/ModalButton';
 
 const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-`;
-
-const Button = styled.button`
-  margin-top: 20px;
 `;
 
 // WebcamComponent + fileUploader
@@ -23,13 +20,12 @@ const WebcamCapture = ({ endpoint, onLoading, setData }) => {
   const captureAndUpload = useCallback(() => {
     const imageSrc = webcamRef.current.getScreenshot();
     if (imageSrc) {
-      // Convert base64/URLEncoded data component to raw binary data held in a string
+      // base64/URLEncoded 이미지를 raw binary로 변환
       let byteString;
       if (imageSrc.split(',')[0].indexOf('base64') >= 0)
         byteString = atob(imageSrc.split(',')[1]);
       else byteString = unescape(imageSrc.split(',')[1]);
 
-      // Separate out the mime component and construct a Blob from the byteString
       const mimeString = imageSrc.split(',')[0].split(':')[1].split(';')[0];
       const ia = new Uint8Array(byteString.length);
       for (let i = 0; i < byteString.length; i++) {
@@ -37,14 +33,14 @@ const WebcamCapture = ({ endpoint, onLoading, setData }) => {
       }
       const blob = new Blob([ia], { type: mimeString });
 
-      // Use FormData to send the captured image file
+      // formData에 담기
       const formData = new FormData();
       formData.append('file', blob);
 
       onLoading && onLoading(true);
       setIsUploading(true);
 
-      // Post the image to the server endpoint
+      // Post 요청
       axios
         .post(`http://127.0.0.1:${endpoint}`, formData)
         .then((response) => {
@@ -79,9 +75,9 @@ const WebcamCapture = ({ endpoint, onLoading, setData }) => {
         ref={webcamRef}
         mirrored={false}
       />
-      <Button onClick={captureAndUpload} disabled={isUploading}>
-        {isUploading ? 'Uploading…' : 'Capture & Upload'}
-      </Button>
+      <ModalButton onClick={captureAndUpload} disabled={isUploading}>
+        {isUploading ? '업로드 중 ...' : '촬영 및 업로드'}
+      </ModalButton>
     </Container>
   );
 };

@@ -4,7 +4,7 @@ import axios from 'axios';
 import * as SpeechSDK from 'microsoft-cognitiveservices-speech-sdk';
 
 // 5002/api/OCR
-
+// Test version
 const TTSComponent = ({ endpoint }) => {
   const [textToSpeak, setTextToSpeak] = useState('');
 
@@ -52,7 +52,6 @@ const TTSComponent = ({ endpoint }) => {
     );
   };
 
-  // 이 함수는 사용자가 이미지 파일을 업로드할 때 호출되어야 합니다.
   const handleImageUpload = (event) => {
     const imageFile = event.target.files[0];
     fetchOCRData(imageFile);
