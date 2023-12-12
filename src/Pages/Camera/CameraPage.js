@@ -4,6 +4,7 @@ import FileUploader from '../../components/FileUploader';
 import styled from 'styled-components';
 import ResultModal from '../../components/ResultModal';
 import LoadingModal from '../../components/LoadingModal';
+import WebcamCapture from '../Webcam/WebcamCapture';
 
 const CameraContainer = styled.div`
   display: flex;
@@ -67,7 +68,7 @@ const CameraPage = () => {
         <CameraDiv>
           <CameraTitle value="Calendar">생리혈 확인 유무 카메라</CameraTitle>
           <CameraTitle value="Calendar">화면을 클릭해주세요</CameraTitle>
-          <FileUploader
+          <WebcamCapture
             setData={setData}
             endpoint="5001/api/color"
             onLoading={handleLoading}
@@ -86,11 +87,12 @@ const CameraPage = () => {
         <CameraDiv>
           <CameraTitle value="Product">생리대 제품 인식 카메라</CameraTitle>
           <CameraTitle value="Product">화면을 클릭해주세요</CameraTitle>
-          <FileUploader
+          <WebcamCapture
             setData={setData}
             endpoint="5002/api/OCR"
             onLoading={handleLoading}
           />
+
           {isModalOpen && (
             <ResultModal
               data={responseValue}
@@ -110,6 +112,7 @@ const CameraPage = () => {
             endpoint="5004/api/detectTrash"
             onLoading={handleLoading}
           />
+
           {isModalOpen && (
             <ResultModal
               data={responseValue}
