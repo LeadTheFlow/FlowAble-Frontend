@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
+import WebcamComponent from '../Pages/Webcam/WebcamComponent';
 
 const FileContainer = styled.div`
   display: flex;
@@ -11,6 +12,7 @@ const FileContainer = styled.div`
 const FileUploader = ({ setData, endpoint, onLoading }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
+  const [captureImg, setCaptureImg] = useState(null);
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
