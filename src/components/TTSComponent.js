@@ -1,52 +1,52 @@
 // TTSComponent.js
-import React, { useState } from "react";
-import axios from "axios";
-import * as SpeechSDK from "microsoft-cognitiveservices-speech-sdk";
+import React, { useState } from 'react';
+import axios from 'axios';
+import * as SpeechSDK from 'microsoft-cognitiveservices-speech-sdk';
 
 // 5002/api/OCR
 
 const TTSComponent = ({ endpoint }) => {
-  const [textToSpeak, setTextToSpeak] = useState("");
+  const [textToSpeak, setTextToSpeak] = useState('');
 
   const fetchOCRData = async (imageFile) => {
     const formData = new FormData();
-    formData.append("file", imageFile);
+    formData.append('file', imageFile);
 
     axios
-      .post("http://127.0.0.1:5002/api/OCR", formData)
+      .post('http://127.0.0.1:5002/api/OCR', formData)
       .then((response) => {
         console.log(response.data.brand);
         const TTSText =
-          "촬영하신 제품은" +
+          '촬영하신 제품은' +
           response.data.brand +
-          ", 사이즈는" +
+          ', 사이즈는' +
           response.data.size +
-          "입니다.";
+          '입니다.';
         setTextToSpeak(TTSText);
       })
       .catch((error) => {
-        console.error("Error uploading image", error);
+        console.error('Error uploading image', error);
       });
   };
 
   const speakText = (text) => {
     const speechConfig = SpeechSDK.SpeechConfig.fromSubscription(
-      "614a864f8782482a813b09414bfd8985",
-      "koreacentral"
+      '614a864f8782482a813b09414bfd8985',
+      'koreacentral'
     );
-    speechConfig.speechSynthesisVoiceName = "ko-KR-SunHiNeural";
+    speechConfig.speechSynthesisVoiceName = 'ko-KR-SunHiNeural';
     const synthesizer = new SpeechSDK.SpeechSynthesizer(speechConfig);
 
     synthesizer.speakTextAsync(
       text,
       (result) => {
         if (result) {
-          console.log("Speech synthesis succeeded.");
+          console.log('Speech synthesis succeeded.');
         }
         synthesizer.close();
       },
       (error) => {
-        console.error("Error synthesizing speech:", error);
+        console.error('Error synthesizing speech:', error);
         synthesizer.close();
       }
     );

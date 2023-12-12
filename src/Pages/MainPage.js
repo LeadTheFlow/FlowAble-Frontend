@@ -71,7 +71,7 @@ const MainPage = () => {
     <MainContainer>
       {/* <p>{data.message}</p> */}
       {/* <FileUploader onUpload={handleUploadResult}></FileUploader> */}
-      {/* <TTSComponent endpoint={"5002/api/OCR"}></TTSComponent> */}
+      {/* <TTSComponent endpoint={'5002/api/OCR'}></TTSComponent> */}
       <LogoImg src={FlowAbleLogo} />
       <StyledButton
         value="Calendar"

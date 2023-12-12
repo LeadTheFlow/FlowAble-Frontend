@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import StyledButton from './StyledButton';
 import ModalButton from './ModalButton';
+import * as SpeechSDK from 'microsoft-cognitiveservices-speech-sdk';
 
 const ModalBackground = styled.div`
   position: fixed;
@@ -51,6 +52,51 @@ const ResultModal = ({ data, closeModal, cameraType }) => {
   function moveToPage(moveTo) {
     navigate('/Pages/' + moveTo);
   }
+  useEffect(() => {
+    // Define synthesizer using let instead of const
+    let synthesizer;
+
+    try {
+      const speechConfig = SpeechSDK.SpeechConfig.fromSubscription(
+        '614a864f8782482a813b09414bfd8985',
+        'koreacentral'
+      );
+      speechConfig.speechSynthesisVoiceName = 'ko-KR-SunHiNeural';
+      synthesizer = new SpeechSDK.SpeechSynthesizer(speechConfig);
+
+      let text = '';
+      if (cameraType === 'ColorDetection') {
+        text = `진단 결과. ${data.message}`;
+      } else if (cameraType === 'ProductOCR') {
+        text = `이 제품은 ${data.brand}, 사이즈는 ${data.size}입니다.`;
+      } else if (cameraType === 'TrashcanDetection') {
+        text = `화면의 ${data.position}에 수거함이 있습니다.`;
+      }
+
+      // Execute speech synthesis immediately after constructing the text
+      synthesizer.speakTextAsync(
+        text,
+        (result) => {
+          if (result) {
+            console.log('Speech synthesis succeeded.');
+          }
+        },
+        (error) => {
+          console.error('Error synthesizing speech:', error);
+        }
+      );
+    } catch (error) {
+      console.error('Error initializing SpeechSynthesizer:', error);
+    }
+
+    // Cleanup function to stop speech synthesis if the component unmounts
+    return () => {
+      // Check if it's still open before calling close
+      if (synthesizer && !synthesizer.isDisposed) {
+        synthesizer.close();
+      }
+    };
+  }, [data, cameraType]);
 
   return (
     <ModalBackground>
