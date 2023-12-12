@@ -11,7 +11,7 @@ const FileUploader = ({ setData, endpoint }) => {
   const handleUploadTest = () => {
     const formData = new FormData();
     formData.append('file', selectedFile);
-
+    console.log(selectedFile);
     axios
       .post(`http://127.0.0.1:${endpoint}`, formData)
       .then((response) => {
