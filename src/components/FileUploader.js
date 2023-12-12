@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
+
+const FileContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 const FileUploader = ({ setData, endpoint, onLoading }) => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -34,12 +41,12 @@ const FileUploader = ({ setData, endpoint, onLoading }) => {
   };
 
   return (
-    <div>
+    <FileContainer>
       <input type="file" onChange={handleFileChange} />
       <button onClick={handleUploadTest} disabled={isUploading}>
         업로드
       </button>
-    </div>
+    </FileContainer>
   );
 };
 

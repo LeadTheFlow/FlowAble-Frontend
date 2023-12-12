@@ -5,6 +5,7 @@ import { json, useNavigate } from 'react-router-dom';
 import StyledButton from '../components/StyledButton';
 import FileUploader from '../components/FileUploader';
 import TTSComponent from '../components/TTSComponent';
+import FlowAbleLogo from '../assets/FlowAbleLogo.png';
 
 const MainContainer = styled.div`
   display: flex;
@@ -12,6 +13,10 @@ const MainContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+`;
+
+const LogoImg = styled.img`
+  max-width: 100px;
 `;
 
 const MainPage = () => {
@@ -64,9 +69,10 @@ const MainPage = () => {
 
   return (
     <MainContainer>
-      <p>{data.message}</p>
+      {/* <p>{data.message}</p> */}
       {/* <FileUploader onUpload={handleUploadResult}></FileUploader> */}
       {/* <TTSComponent endpoint={"5002/api/OCR"}></TTSComponent> */}
+      <LogoImg src={FlowAbleLogo} />
       <StyledButton
         value="Calendar"
         onClick={() => moveToPage('Calendar/Selection')}

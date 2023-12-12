@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
-const StyledButton = styled.button`
-  font-size: 2rem;
+const ModalButton = styled.button`
+  font-size: 1.5rem;
   border-style: none;
   border-radius: 4dvh;
   min-width: 60%;
-  padding: 1rem;
-  margin: 1rem;
+  padding: 0.8rem;
+  margin: 0.5rem;
   color: black;
   cursor: pointer;
   /* 각 버튼에 대한 배경색 지정 */
@@ -28,4 +28,4 @@ const StyledButton = styled.button`
   }
 `;
 
-export default StyledButton;
+export default ModalButton;

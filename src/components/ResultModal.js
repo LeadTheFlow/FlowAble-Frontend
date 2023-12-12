@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import StyledButton from './StyledButton';
+import ModalButton from './ModalButton';
 
 const ModalBackground = styled.div`
   position: fixed;
@@ -17,12 +19,12 @@ const ModalBackground = styled.div`
 const ModalContainer = styled.div`
   position: relative;
   background-color: white;
+  text-align: center;
+  display: flex;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  max-width: 400px;
   width: 70%;
-  text-align: center;
 
   div {
     margin-bottom: 15px;
@@ -38,13 +40,9 @@ const ModalContainer = styled.div`
   }
 `;
 
-const ModalButton = styled.button`
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+const ResultTitle = styled.div`
+  font-size: 1.5rem;
+  padding: 10px;
 `;
 
 const ResultModal = ({ data, closeModal, cameraType }) => {
@@ -59,30 +57,43 @@ const ResultModal = ({ data, closeModal, cameraType }) => {
       <ModalContainer>
         {cameraType === 'ColorDetection' && (
           <div>
-            <p>Color Detection 결과:</p>
-            <p>{data.isColor}</p>
-            <p>{data.message}</p>
-            <ModalButton onClick={() => moveToPage('Calendar')}>
-              확인
+            <ResultTitle>
+              진단 결과:
+              {data.message}
+            </ResultTitle>
+            <ModalButton
+              value="Calendar"
+              onClick={() => moveToPage('Calendar')}
+            >
+              달력 기록
+            </ModalButton>
+            <ModalButton value="Calendar" onClick={closeModal}>
+              다시 찍기
             </ModalButton>
           </div>
         )}
 
         {cameraType === 'ProductOCR' && (
           <div>
-            <p>Product OCR 결과:</p>
-            <p>{data.brand}</p>
-            <p>{data.size}</p>
+            <ResultTitle>
+              이 제품은 {data.brand}, 사이즈는 {data.size} 입니다
+            </ResultTitle>
+            <ModalButton value="Product" onClick={closeModal}>
+              다시 찍기
+            </ModalButton>
           </div>
         )}
 
         {cameraType === 'TrashcanDetection' && (
           <div>
-            <p>Trashcan Detection 결과:</p>
-            <p>{data.position}</p>
+            <ResultTitle>
+              화면의 {data.position}에 수거함이 있습니다
+            </ResultTitle>
+            <ModalButton value="Restroom" onClick={closeModal}>
+              다시 찍기
+            </ModalButton>
           </div>
         )}
-        <button onClick={closeModal}>닫기</button>
       </ModalContainer>
     </ModalBackground>
   );

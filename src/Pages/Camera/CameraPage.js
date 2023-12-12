@@ -13,6 +13,30 @@ const CameraContainer = styled.div`
   height: 100vh;
 `;
 
+const CameraDiv = styled.div`
+  text-align: center;
+  margin: 10px;
+`;
+
+const CameraTitle = styled.p`
+  font-size: 1.5rem;
+  padding: 10px;
+  border-radius: 4dvh;
+
+  ${(props) => {
+    switch (props.value) {
+      case 'Calendar':
+        return 'background-color: #EC524B;';
+      case 'Product':
+        return 'background-color: #FFD600;';
+      case 'Restroom':
+        return 'background-color: #4C8DFF;';
+      default:
+        return 'background-color: #92D14F;';
+    }
+  }}
+`;
+
 const CameraPage = () => {
   const location = useLocation();
   const cameraType = location.state?.cameraType || 'Camera';
@@ -40,9 +64,9 @@ const CameraPage = () => {
   return (
     <CameraContainer>
       {cameraType === 'ColorDetection' && (
-        <div>
-          <p>생리혈 확인 유무 카메라</p>
-          <p>화면을 클릭해주세요</p>
+        <CameraDiv>
+          <CameraTitle value="Calendar">생리혈 확인 유무 카메라</CameraTitle>
+          <CameraTitle value="Calendar">화면을 클릭해주세요</CameraTitle>
           <FileUploader
             setData={setData}
             endpoint="5001/api/color"
@@ -56,13 +80,17 @@ const CameraPage = () => {
               cameraType={cameraType}
             />
           )}
-        </div>
+        </CameraDiv>
       )}
       {cameraType === 'ProductOCR' && (
-        <div>
-          <p>생리대 제품 인식 카메라</p>
-          <p>화면을 클릭해주세요</p>
-          <FileUploader setData={setData} endpoint="5002/api/OCR" />
+        <CameraDiv>
+          <CameraTitle value="Product">생리대 제품 인식 카메라</CameraTitle>
+          <CameraTitle value="Product">화면을 클릭해주세요</CameraTitle>
+          <FileUploader
+            setData={setData}
+            endpoint="5002/api/OCR"
+            onLoading={handleLoading}
+          />
           {isModalOpen && (
             <ResultModal
               data={responseValue}
@@ -70,14 +98,18 @@ const CameraPage = () => {
               cameraType={cameraType}
             />
           )}
-        </div>
+        </CameraDiv>
       )}
 
       {cameraType === 'TrashcanDetection' && (
-        <div>
-          <p>수거함 유무 인식 카메라</p>
-          <p>화면을 클릭해주세요</p>
-          <FileUploader setData={setData} endpoint="5004/api/detectTrash" />
+        <CameraDiv>
+          <CameraTitle value="Restroom">수거함 유무 인식 카메라</CameraTitle>
+          <CameraTitle value="Restroom">화면을 클릭해주세요</CameraTitle>
+          <FileUploader
+            setData={setData}
+            endpoint="5004/api/detectTrash"
+            onLoading={handleLoading}
+          />
           {isModalOpen && (
             <ResultModal
               data={responseValue}
@@ -85,7 +117,7 @@ const CameraPage = () => {
               cameraType={cameraType}
             />
           )}
-        </div>
+        </CameraDiv>
       )}
     </CameraContainer>
   );
