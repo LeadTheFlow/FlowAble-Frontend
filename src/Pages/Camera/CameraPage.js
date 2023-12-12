@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import FileUploader from '../../components/FileUploader';
 import styled from 'styled-components';
-import ResultModel from '../../components/ResultModel';
+import ResultModal from '../../components/ResultModal';
+import LoadingModal from '../../components/LoadingModal';
 
 const CameraContainer = styled.div`
   display: flex;
@@ -17,6 +18,7 @@ const CameraPage = () => {
   const cameraType = location.state?.cameraType || 'Camera';
   const [responseValue, setResponseValue] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -28,7 +30,11 @@ const CameraPage = () => {
 
   const setData = (value) => {
     setResponseValue(value);
-    openModal(); // 데이터를 받아오면 모달을 엽니다.
+    openModal(true);
+  };
+
+  const handleLoading = (value) => {
+    setIsLoading(value);
   };
 
   return (
@@ -37,9 +43,14 @@ const CameraPage = () => {
         <div>
           <p>생리혈 확인 유무 카메라</p>
           <p>화면을 클릭해주세요</p>
-          <FileUploader setData={setData} endpoint="5001/api/color" />
+          <FileUploader
+            setData={setData}
+            endpoint="5001/api/color"
+            onLoading={handleLoading}
+          />
+          {isLoading && <LoadingModal />}
           {isModalOpen && (
-            <ResultModel
+            <ResultModal
               data={responseValue}
               closeModal={closeModal}
               cameraType={cameraType}
@@ -53,7 +64,22 @@ const CameraPage = () => {
           <p>화면을 클릭해주세요</p>
           <FileUploader setData={setData} endpoint="5002/api/OCR" />
           {isModalOpen && (
-            <ResultModel
+            <ResultModal
+              data={responseValue}
+              closeModal={closeModal}
+              cameraType={cameraType}
+            />
+          )}
+        </div>
+      )}
+
+      {cameraType === 'TrashcanDetection' && (
+        <div>
+          <p>수거함 유무 인식 카메라</p>
+          <p>화면을 클릭해주세요</p>
+          <FileUploader setData={setData} endpoint="5004/api/detectTrash" />
+          {isModalOpen && (
+            <ResultModal
               data={responseValue}
               closeModal={closeModal}
               cameraType={cameraType}

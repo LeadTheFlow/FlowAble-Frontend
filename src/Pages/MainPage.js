@@ -57,10 +57,10 @@ const MainPage = () => {
     navigate(`/Pages/${moveTo}`, { state: { cameraType } });
   };
 
-  const handleUploadResult = (result) => {
-    console.log(result);
-    setData(result);
-  };
+  // const handleUploadResult = (result) => {
+  //   console.log(result);
+  //   setData(result);
+  // };
 
   return (
     <MainContainer>
@@ -79,7 +79,10 @@ const MainPage = () => {
       >
         생리대 선택
       </StyledButton>
-      <StyledButton value="Restroom" onClick={() => moveToPage('Restroom')}>
+      <StyledButton
+        value="Restroom"
+        onClick={() => moveToCameraPage('Camera', 'TrashcanDetection')}
+      >
         화장실 환경
       </StyledButton>
     </MainContainer>
