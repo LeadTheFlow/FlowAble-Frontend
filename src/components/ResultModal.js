@@ -9,8 +9,8 @@ const ModalBackground = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  height: 100vh;
+  width: max-content;
   background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
@@ -53,7 +53,6 @@ const ResultModal = ({ data, closeModal, cameraType }) => {
     navigate('/Pages/' + moveTo);
   }
   useEffect(() => {
-    // Define synthesizer using let instead of const
     let synthesizer;
 
     try {
@@ -68,12 +67,15 @@ const ResultModal = ({ data, closeModal, cameraType }) => {
       if (cameraType === 'ColorDetection') {
         text = `진단 결과. ${data.message}`;
       } else if (cameraType === 'ProductOCR') {
-        text = `이 제품은 ${data.brand}, 사이즈는 ${data.size}입니다.`;
+        if (data.brand === '') {
+          text = `제품을 인식하지 못했습니다.`;
+        } else {
+          text = `이 제품은 ${data.brand}, 사이즈는 ${data.size}입니다.`;
+        }
       } else if (cameraType === 'TrashcanDetection') {
         text = `화면의 ${data.position}에 수거함이 있습니다.`;
       }
 
-      // Execute speech synthesis immediately after constructing the text
       synthesizer.speakTextAsync(
         text,
         (result) => {
@@ -89,9 +91,7 @@ const ResultModal = ({ data, closeModal, cameraType }) => {
       console.error('Error initializing SpeechSynthesizer:', error);
     }
 
-    // Cleanup function to stop speech synthesis if the component unmounts
     return () => {
-      // Check if it's still open before calling close
       if (synthesizer && !synthesizer.isDisposed) {
         synthesizer.close();
       }
@@ -121,9 +121,13 @@ const ResultModal = ({ data, closeModal, cameraType }) => {
 
         {cameraType === 'ProductOCR' && (
           <div>
-            <ResultTitle>
-              이 제품은 {data.brand}, 사이즈는 {data.size} 입니다
-            </ResultTitle>
+            {data.brand !== '' ? (
+              <ResultTitle>
+                이 제품은 {data.brand}, 사이즈는 {data.size} 입니다
+              </ResultTitle>
+            ) : (
+              <ResultTitle>제품을 인식하지 못했습니다</ResultTitle>
+            )}
             <ModalButton value="Product" onClick={closeModal}>
               다시 찍기
             </ModalButton>

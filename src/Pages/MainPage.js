@@ -10,6 +10,7 @@ import FlowAbleLogo from '../assets/FlowAbleLogo.png';
 const MainContainer = styled.div`
   display: flex;
   height: 100vh;
+  width: 100%;
   flex-direction: column;
   justify-content: center;
   align-items: center;
